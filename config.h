@@ -67,6 +67,13 @@ static const char *termcmd[]  = { "kitty", NULL };
 static const char *brightup[]   = { "brightnessctl", "set", "5%+", NULL };
 static const char *brightdown[] = { "brightnessctl", "set", "5%-", NULL };
 
+// Volume control commands (using PulseAudio)
+static const char *up_vol_cmd[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *down_vol_cmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *mute_vol_cmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+
+static const char *prtsc_cmd[] = { "sh", "-c", "mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png", NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -93,8 +100,17 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
-	{ 0, XF86XK_MonBrightnessUp,   spawn, {.v = brightup } },
-	{ 0, XF86XK_MonBrightnessDown, spawn, {.v = brightdown } },
+	/* Brighness control */
+	{ 0, 				XF86XK_MonBrightnessUp,		spawn, {.v = brightup } },
+	{ 0, 				XF86XK_MonBrightnessDown,	spawn, {.v = brightdown } },
+
+	/* Volume control */
+	{ 0, 				XF86XK_AudioLowerVolume,	spawn, {.v = down_vol_cmd } },
+	{ 0, 				XF86XK_AudioRaiseVolume,	spawn, {.v = up_vol_cmd } },
+	{ 0, 				XF86XK_AudioMute, 		spawn, {.v = mute_vol_cmd } },
+
+	 /* PrintScreen to capture area */
+	{ 0, XK_Print, spawn, {.v = prtsc_cmd } },
 
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
