@@ -68,11 +68,27 @@ static const char *brightup[]   = { "brightnessctl", "set", "5%+", NULL };
 static const char *brightdown[] = { "brightnessctl", "set", "5%-", NULL };
 
 // Volume control commands (using PulseAudio)
-static const char *up_vol_cmd[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *down_vol_cmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char *mute_vol_cmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *up_vol_cmd[]   = {
+	"pactl",
+	"set-sink-volume",
+	"@DEFAULT_SINK@",
+	"+5%", NULL };
+static const char *down_vol_cmd[] = {
+	"pactl",
+	"set-sink-volume",
+	"@DEFAULT_SINK@",
+	"-5%", NULL };
+static const char *mute_vol_cmd[] = {
+	"pactl",
+	"set-sink-mute",
+	"@DEFAULT_SINK@",
+	"toggle", NULL };
 
-static const char *prtsc_cmd[] = { "sh", "-c", "mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png", NULL };
+static const char *prtsc_cmd[] = {
+	"sh",
+	"-c",
+	"mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png",
+	NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
