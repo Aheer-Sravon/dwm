@@ -61,23 +61,38 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = {
+	"dmenu_run",
+	"-m",
+	dmenumon,
+	"-fn",
+	dmenufont,
+	"-nb",
+	col_gray1,
+	"-nf",
+	col_gray3,
+	"-sb",
+	col_cyan,
+	"-sf",
+	col_gray4,
+	NULL
+};
 static const char *termcmd[]  = { "kitty", NULL };
 
-static const char *brightup[]   = { "brightnessctl", "set", "5%+", NULL };
-static const char *brightdown[] = { "brightnessctl", "set", "5%-", NULL };
+static const char *brightup[]   = { "brightnessctl", "set", "2%+", NULL };
+static const char *brightdown[] = { "brightnessctl", "set", "2%-", NULL };
 
 // Volume control commands (using PulseAudio)
 static const char *up_vol_cmd[]   = {
 	"pactl",
 	"set-sink-volume",
 	"@DEFAULT_SINK@",
-	"+5%", NULL };
+	"+2%", NULL };
 static const char *down_vol_cmd[] = {
 	"pactl",
 	"set-sink-volume",
 	"@DEFAULT_SINK@",
-	"-5%", NULL };
+	"-2%", NULL };
 static const char *mute_vol_cmd[] = {
 	"pactl",
 	"set-sink-mute",
@@ -85,9 +100,11 @@ static const char *mute_vol_cmd[] = {
 	"toggle", NULL };
 
 static const char *prtsc_cmd[] = {
-	"sh",
+	"bash",
 	"-c",
-	"mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png",
+	"mkdir -p ~/Pictures/Screenshots && "
+	"f=~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png && "
+	"maim -s | tee \"$f\" | xclip -selection clipboard -t image/png",
 	NULL };
 
 static const Key keys[] = {
